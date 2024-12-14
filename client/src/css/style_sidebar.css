@@ -1,0 +1,70 @@
+.jacket-options .filters.filters.fabric_step.closed_side {
+    height: 100vh !important;
+}
+
+.jacket-options  .filters .item_menu .title {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 8px 0px;
+}
+
+.accordion-container {
+    display: flex;
+    margin-top: 30px;
+    flex-direction: column;
+  }
+  .accordion-content .grid_layout {
+    margin-bottom: 20px;
+}
+  
+  .accordion-item {
+    margin-bottom: 10px;
+  }
+  
+  .accordion-title {
+    font-size: 18px;
+    cursor: pointer;
+    padding: 14px 0px 14px 60px;
+    background-color: #f1f1f1;
+    text-align: left;
+}
+  
+  .accordion-content {
+    display: none;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .accordion-content.open {
+    display: block;
+    max-height: max-content; /* Arbitrary large value to allow for content */
+    transition: max-height 0.3s ease-in;
+    overflow-y: auto;
+  }
+  
+  .option {
+    padding: 10px;
+    cursor: pointer;
+  }
+  .accordion-container .title {
+    margin: 0px 0px 15px 0px;
+  }
+  h5.accordion-title {
+    margin: 0px 20px 0px 20px;
+}
+  .price {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  .accordion-content.open {
+    padding: 20px 0px;
+}
+  .title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
