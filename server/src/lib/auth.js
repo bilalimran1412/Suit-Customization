@@ -3,9 +3,9 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 
-const authClient = new MongoClient(
-	"mongodb+srv://challchutikrputtar:j9lLI5tEdVhBhRDQ@abdullah.sanl4.mongodb.net/suitedb?retryWrites=true&w=majority",
-);
+dotenv.config();
+
+const authClient = new MongoClient(process.env.DATABASE_URL);
 
 const db = authClient.db();
 export const auth = betterAuth({

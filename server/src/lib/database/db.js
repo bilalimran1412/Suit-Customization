@@ -4,8 +4,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const MONGODB_URI =
-	"mongodb+srv://challchutikrputtar:j9lLI5tEdVhBhRDQ@abdullah.sanl4.mongodb.net/suitedb?retryWrites=true&w=majority";
+if (!process.env.DATABASE_URL) {
+	console.log("DATABASE_URL is not set" , process.env.DATABASE_URL);
+	throw new Error("DATABASE_URL is not set");
+}
+
+const MONGODB_URI = process.env.DATABASE_URL;
 
 // Create and connect MongoDB client
 export const connectMongo = async () => {
