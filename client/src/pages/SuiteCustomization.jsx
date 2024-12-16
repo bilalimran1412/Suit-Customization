@@ -18,7 +18,6 @@ export function SuiteCustomization() {
 	const [setOuttransition, setoutstransition] = useState("");
 	const [showLapel, setShowLapel] = useState(false);
 	const [showFit, setShowFit] = useState(false);
-
 	const [selectedPrice, setSelectedPrice] = useState("");
 	const [selectedLapelbuttonwholecolor, setSelectedLapelbuttonwholecolor] = useState("");
 	const [selectedPockets, setSelectedPockets] = useState("");
@@ -92,14 +91,12 @@ export function SuiteCustomization() {
 					) : (
 						<LapelSelection
 							className={transition}
-							
 							onSelectColumbiaInsideDecorativeStitching={setSelectedColumbiainsidedecorativestitching}
 							onSelectSweatPiece={setSelectedSweatPiece}
 							onSelectPositionOfLabels={setSelecedPositionoftheLabels}
 							onSelectStitchingLabelColor={setSelectedStitchingLabelcolour}
 							onSelectCustomerLabelTypeStitching={setSelectedCustomerLabelTypeStitching}
 							onSelectButtonholesOnSleeves={setSelectedButtonholesOnSleeves}
-
 							onSelectedInsidePocketEnvelopeFlapClosure={setSelectedInsidePocketEnvelopeFlapClosure}
 							onSelectedInsidePocketJettsBartackColour={setSelectedInsidePocketJettsBartackColour}
 							onSelectedInsidePocketJettsBartackType={setSelectedInsidePocketJettsBartackType}

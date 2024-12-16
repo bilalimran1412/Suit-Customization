@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../css/style_sidebar.css";
 import { useId } from "react";
 import { useSelectedData } from "../context/SelectedData";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./dialog";
 
 const JacketOptions = ({
 	onSelectColumbiaInsideDecorativeStitching,
@@ -40,6 +41,7 @@ const JacketOptions = ({
 	className,
 }) => {
 	const [selectedStyle, setSelectedStyle] = useState("Single-breasted 1 button");
+	const [base, setBase] = useState("base");
 	const [selectedFit, setSelectedFit] = useState("Same Fabric");
 	const [selectedLapel, setSelectedLapel] = useState("Notch");
 	const [selectedLapelWidth, setSelectedLapelWidth] = useState("Slim");
@@ -73,7 +75,8 @@ const JacketOptions = ({
 		useState("Button Hole Envelop");
 
 	// Columbia Inside Decorative Stitching
-	const [selectedColumbiaInsideDecorativeStitching, setSelectedColumbiaInsideDecorativeStitching] = useState("Without Columbia");
+	const [selectedColumbiaInsideDecorativeStitching, setSelectedColumbiaInsideDecorativeStitching] =
+		useState("Without Columbia");
 
 	// Sweat Piece
 	const [selectedSweatPiece, setSelectedSweatPiece] = useState("Without sweat piece");
@@ -88,11 +91,20 @@ const JacketOptions = ({
 	const [selectedCustomerLabelTypeStitching, setSelectedCustomerLabelTypeStitching] = useState("Straight Stitching");
 
 	// Buttonholes on Sleeves
-	const [selectedButtonholesOnSleeves, setSelectedButtonholesOnSleeves] = useState("Non functional buttonholes on sleeves");
+	const [selectedButtonholesOnSleeves, setSelectedButtonholesOnSleeves] = useState(
+		"Non functional buttonholes on sleeves",
+	);
+
+	const [embroideryThread, setEmbroideryThread] = useState("Without Embroidery");
+	const [embroideryThreadColor, setEmbroideryThreadColor] = useState("");
 
 	const { handleSelectData } = useSelectedData();
 
 	const id = useId();
+
+	const [isThreadDialogOpen, setIsThreadDialogOpen] = useState(false);
+
+	// Add handler function
 
 	const styleOptions = [
 		{
@@ -112,19 +124,19 @@ const JacketOptions = ({
 			},
 		},
 		{
-			label: "Single-breasted 3 buttons",
+			label: "Double-breasted 3 buttons",
 			iconClass: "icon_60",
 			onClick: () => {
-				onSelectStyle("Single-breasted 3 buttons");
-				setSelectedStyle("Single-breasted 3 buttons");
+				onSelectStyle("Double-breasted 3 buttons");
+				setSelectedStyle("Double-breasted 3 buttons");
 			},
 		},
 		{
-			label: "Single-breasted 4 buttons",
+			label: "Double-breasted 4 buttons",
 			iconClass: "icon_5f",
 			onClick: () => {
-				onSelectStyle("Single-breasted 4 buttons");
-				setSelectedStyle("Single-breasted 4 buttons");
+				onSelectStyle("Double-breasted 4 buttons");
+				setSelectedStyle("Double-breasted 4 buttons");
 			},
 		},
 	];
@@ -169,27 +181,59 @@ const JacketOptions = ({
 
 	const lapelStyleWidth = [
 		{
-			label: "Slim",
+			label: "6cm",
 			iconClass: "icon_4f",
 			onClick: () => {
-				onSelectLapelWidth("Slim");
-				setSelectedLapelWidth("Slim");
+				onSelectLapelWidth("6cm");
+				setSelectedLapelWidth("6cm");
 			},
 		},
 		{
-			label: "Standard",
+			label: "7cm",
 			iconClass: "icon_63",
 			onClick: () => {
-				onSelectLapelWidth("Standard");
-				setSelectedLapelWidth("Standard");
+				onSelectLapelWidth("7cm");
+				setSelectedLapelWidth("7cm");
 			},
 		},
 		{
-			label: "Wide",
+			label: "8cm",
 			iconClass: "icon_50",
 			onClick: () => {
-				onSelectLapelWidth("Wide");
-				setSelectedLapelWidth("Wide");
+				onSelectLapelWidth("8cm");
+				setSelectedLapelWidth("8cm");
+			},
+		},
+		{
+			label: "9cm",
+			iconClass: "icon_50",
+			onClick: () => {
+				onSelectLapelWidth("9cm");
+				setSelectedLapelWidth("9cm");
+			},
+		},
+		{
+			label: "10cm",
+			iconClass: "icon_50",
+			onClick: () => {
+				onSelectLapelWidth("10cm");
+				setSelectedLapelWidth("10cm");
+			},
+		},
+		{
+			label: "11cm",
+			iconClass: "icon_50",
+			onClick: () => {
+				onSelectLapelWidth("11cm");
+				setSelectedLapelWidth("11cm");
+			},
+		},
+		{
+			label: "12cm",
+			iconClass: "icon_50",
+			onClick: () => {
+				onSelectLapelWidth("12cm");
+				setSelectedLapelWidth("12cm");
 			},
 		},
 	];
@@ -473,6 +517,24 @@ const JacketOptions = ({
 			},
 		},
 	];
+	const embroideryThreadOptions = [
+		{
+			label: "Select Embroidery Thread",
+			iconClass: "bg_images_icons embroidery_thread",
+			onClick: () => {
+				setEmbroideryThread("Select Embroidery Thread"); // Set the embroideryThread state
+				setIsThreadDialogOpen(true);
+			},
+		},
+		{
+			label: "Without Embroidery",
+			iconClass: "bg_images_icons without_embroidery",
+			onClick: () => {
+				setEmbroideryThread("Without Embroidery"); // Setnt the embroideryThread state
+				setEmbroideryThreadColor(""); // Set the embroideryThreadColor state to null
+			},
+		},
+	];
 
 	const FrontendOptionsMap = [
 		{
@@ -483,7 +545,7 @@ const JacketOptions = ({
 			className: "styled_option grid_layout",
 		},
 		{
-			title: "Mix & match fabrics",
+			title: "position",
 			options: fitOptions,
 			selectedOption: selectedFit,
 			setSelectedOption: setSelectedFit,
@@ -518,11 +580,19 @@ const JacketOptions = ({
 			className: "pocket_option grid_layout",
 		},
 		{
+			title: "Embroidery Thread",
+			options: embroideryThreadOptions,
+			selectedOption: embroideryThread,
+			setSelectedOption: setEmbroideryThread,
+			className: "embroidery_option grid_layout",
+		},
+		{
 			title: "Embroidery – position",
 			options: insideembroideryOptions,
 			selectedOption: selectedEmbroidery,
 			setSelectedOption: setSelectedEmbroidery,
 			className: "pocket_option grid_layout",
+			disabled: embroideryThread === "Without Embroidery",
 		},
 		{
 			title: "Sleeve Button holes - Variants",
@@ -1358,6 +1428,9 @@ const JacketOptions = ({
 			id: id,
 			quantity: 1,
 			price: price,
+			base: base,
+			embroideryThread: embroideryThread,
+			embroideryThreadColor: embroideryThreadColor,
 			febricaSelection: selectedFebric,
 			style: selectedStyle,
 			Embroideryposition: selectedEmbroidery,
@@ -1386,16 +1459,15 @@ const JacketOptions = ({
 			stitchingLabelColour: selectedStitchingLabelColor,
 			customerLabelTypeStitching: selectedCustomerLabelTypeStitching,
 			buttonholesOnSleeves: selectedButtonholesOnSleeves,
-
-
-
 		};
 
 		handleSelectData(newSelection);
 	}, [
 		selectedStyle,
+		embroideryThread,
 		selectedOutsidedecorativestitchingposition,
 		selectedFit,
+		embroideryThreadColor,
 		selectedLapel,
 		selectedLapelWidth,
 		selectedPockets,
@@ -1435,14 +1507,17 @@ const JacketOptions = ({
 							</h5>
 							<div className={`accordion-content ${openSection === "front" ? "open" : ""}`}>
 								{FrontendOptionsMap.map((section, index) => (
-									<div key={index}>
+									<div key={index} className={`section ${section.disabled ? "opacity-50" : ""}`}>
 										<h5 className="title">{section.title}</h5>
-										<div className={section.className}>
+										<div className={`${section.className} ${section.disabled ? "pointer-events-none" : ""}`}>
 											{section.options.map((option, idx) => (
 												<div
 													key={idx}
-													className={`option ${section.selectedOption === option.label ? "active" : ""}`}
-													onClick={option.onClick}>
+													className={`option 
+            ${section.selectedOption === option.label ? "active" : ""}
+            ${section.disabled ? "cursor-not-allowed" : "cursor-pointer"}
+          `}
+													onClick={() => option.onClick()}>
 													{option.imgSrc ? (
 														<img alt={option.label} className="b-lazy b-loaded" src={option.imgSrc} />
 													) : (
@@ -1452,6 +1527,14 @@ const JacketOptions = ({
 													{option.price && <span className="price">{option.price}</span>}
 												</div>
 											))}
+
+											<DialogThread
+												open={isThreadDialogOpen}
+												setOpen={setIsThreadDialogOpen}
+												onSelectThread={(color) => {
+													setEmbroideryThreadColor(color);
+												}}
+											/>
 										</div>
 									</div>
 								))}
@@ -1630,3 +1713,36 @@ const JacketOptions = ({
 };
 
 export default JacketOptions;
+
+const DialogThread = ({ open, setOpen, onSelectThread }) => {
+	const threadColors = [
+		{ color: "Red", code: "#FF0000" },
+		{ color: "Blue", code: "#0000FF" },
+		{ color: "Black", code: "#000000" },
+		{ color: "White", code: "#FFFFFF" },
+	];
+
+	return (
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>Select Thread Color</DialogTitle>
+				</DialogHeader>
+				<div className="grid grid-cols-2 gap-4 py-4">
+					{threadColors.map((thread) => (
+						<button
+							key={thread.color}
+							className="flex items-center gap-2 p-2 border rounded hover:bg-gray-100"
+							onClick={() => {
+								onSelectThread(thread.color);
+								setOpen(false);
+							}}>
+							<div className="w-6 h-6 rounded-full" style={{ backgroundColor: thread.code }} />
+							<span>{thread.color}</span>
+						</button>
+					))}
+				</div>
+			</DialogContent>
+		</Dialog>
+	);
+};

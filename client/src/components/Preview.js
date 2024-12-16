@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../css/Preview.css";
-import imageLayers from "./imageLAyer";
+import imageLayers from "./imageLAyer.js";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cartContext";
 import { useSelectedData } from "../context/SelectedData";
@@ -30,32 +30,6 @@ const Preview = ({
 	const navigate = useNavigate();
 	const { addToCart } = useCart();
 	const { selectedData } = useSelectedData();
-	const generateKey = () => {
-		const options = [];
-		if (fabric) options.push(fabric);
-		if (style) options.push(style);
-		if (lapel) options.push(lapel);
-		if (lapelbuttonwholecolor) options.push(lapelbuttonwholecolor);
-		if (lapelWidth) options.push(lapelWidth);
-		if (fit) options.push(fit);
-		if (pockets) options.push(pockets);
-		if (sleevebuttons) options.push(sleevebuttons);
-		if (pleats) options.push(pleats);
-
-		if (insidePockets) options.push(insidePockets);
-		if (waist) options.push(waist);
-		if (vest) options.push(vest);
-		if (embroidery) options.push(embroidery);
-		if (sleeveButtonholesVariant) options.push(sleeveButtonholesVariant);
-		if (setSelectedInsideSleeveButtonPosition) options.push(setSelectedInsideSleeveButtonPosition);
-		if (typesOfTheStitching) options.push(typesOfTheStitching);
-		if (elbowPatches) options.push(elbowPatches);
-		if (pocketEnvelopeFlapPosition) options.push(pocketEnvelopeFlapPosition);
-		console.log(options.join("-"));
-		return options.join("-");
-	};
-
-	const selectedImages = imageLayers[generateKey()] || [];
 
 	// const selectedImages = imageLayers[`${fabric}-${style}-${lapel}-${fit}`] || [];
 	const [tabChange, settabChange] = useState(0);
@@ -122,6 +96,19 @@ const Preview = ({
 		}
 	};
 
+	// Get the image path for the selected option in each category
+	const getImageSrc = (category, value) => {
+		if (value) {
+			console.log(value, "this is value");
+			console.log(category, "this is category");
+
+			const imagePath = imageLayers.find((layer) => layer.name === category)?.options[value];
+			console.log(imagePath, "this is image path");
+			return imagePath;
+		}
+		return null; // Return null if no option is selected
+	};
+
 	return (
 		<div className="suit-preview flex">
 			<div className="right_side_selecter">
@@ -150,18 +137,77 @@ const Preview = ({
 			</div>
 			<div className={`${className}  betwen_different`}>
 				<div className={`jacket-layers`}>
-					{selectedImages.slice(0, 11).map((src, index) => (
-						<img
-							key={index}
-							src={src}
-							alt={`Jacket Layer ${index}`}
-							className="suit-layer jacket"
-							style={{ zIndex: index + 1 }}
-						/>
-					))}
+					{selectedData.febricaSelection && (
+						<div>
+							<img src={getImageSrc("style", selectedData.style)} alt="Fabric" className="suit-layer jacket" />
+						</div>
+					)}
+
+					{selectedData.Style && (
+						<img src={getImageSrc("style", selectedData.style)} alt="Style" className="suit-layer jacket" />
+					)}
+					<div className={`jacket-layers`}>
+						{selectedData.base && (
+							<img src={getImageSrc("base1", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+						{selectedData.base && (
+							<img src={getImageSrc("base2", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+						{selectedData.base && (
+							<img src={getImageSrc("base3", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+						{selectedData.base && (
+							<img src={getImageSrc("base4", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+
+						{selectedData.base && (
+							<img src={getImageSrc("base5", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+						{selectedData.base && (
+							<img src={getImageSrc("base6", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+						{selectedData.base && (
+							<img src={getImageSrc("base7", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+						{selectedData.base && (
+							<img src={getImageSrc("base8", selectedData.base)} alt="Fabric" className="suit-layer jacket" />
+						)}
+						{selectedData.febricaSelection && (
+							<img
+								src={getImageSrc("fabric", selectedData.febricaSelection)}
+								alt="Fabric"
+								className="suit-layer jacket"
+							/>
+						)}
+						{selectedData.lapelWidth && (
+							<img
+								src={getImageSrc("lapel_width", selectedData.lapelWidth)}
+								alt="Lapel Width"
+								className="suit-layer jacket"
+							/>
+						)}
+						{selectedData.lapelStyle && (
+							<img
+								src={getImageSrc("Lapel Style", selectedData.lapelStyle)}
+								alt="Lapel Width"
+								className="suit-layer jacket"
+							/>
+						)}
+
+						{selectedData.pocketStyle && (
+							<img src={getImageSrc("pocket", selectedData.pocketStyle)} alt="Pocket" className="suit-layer jacket" />
+						)}
+						{selectedData.Mixmatchfabrics && (
+							<img
+								src={getImageSrc("Mix & match fabrics", selectedData.Mixmatchfabrics)}
+								alt="Mix & match fabrics"
+								className="suit-layer jacket"
+							/>
+						)}
+					</div>
 				</div>
 				<div className="pants-layers">
-					{selectedImages.slice(11).map((src, index) => (
+					{/* {selectedImages.slice(11).map((src, index) => (
 						<img
 							key={index + 11}
 							src={src}
@@ -169,7 +215,7 @@ const Preview = ({
 							className="suit-layer pants"
 							style={{ zIndex: index + 12 }}
 						/>
-					))}
+					))} */}
 				</div>
 			</div>
 			<div className="left_side_content">
@@ -191,3 +237,67 @@ const Preview = ({
 };
 
 export default Preview;
+
+//   return (
+//     <div>
+//       <h2>Customize Your Suit</h2>
+
+//       {/* Render all selection dropdowns dynamically */}
+//       {imageLayers.map((layer) => (
+//         <div key={layer.name}>
+//           <h3>Select {layer.name.replace("_", " ").toUpperCase()}</h3>
+//           <select
+//             onChange={(e) => handleSelectionChange(layer.name, e.target.value)}
+//             value={selections[layer.name]}
+//           >
+//             <option value="">Select {layer.name}</option>
+//             {Object.keys(layer.options).map((option) => (
+//               <option key={option} value={option}>
+//                 {option.replace("_", " ").toUpperCase()}
+//               </option>
+//             ))}
+//           </select>
+//         </div>
+//       ))}
+
+//       {/* Display the selected images for each option */}
+//       <div>
+//         <h3>Your Customized Suit</h3>
+//         <div>
+//           {selections.fabric && (
+//             <div>
+//               <h4>Fabric</h4>
+//               <img
+//                 src={getImageSrc("fabric", selections.fabric)}
+//                 alt="Fabric"
+//                 style={{ width: "300px", height: "auto" }}
+//               />
+//             </div>
+//           )}
+//           {selections.lapel_width && (
+//             <div>
+//               <h4>Lapel Width</h4>
+//               <img
+//                 src={getImageSrc("lapel_width", selections.lapel_width)}
+//                 alt="Lapel Width"
+//                 style={{ width: "300px", height: "auto" }}
+//               />
+//             </div>
+//           )}
+//           {selections.pocket && (
+//             <div>
+//               <h4>Pocket</h4>
+//               <img
+//                 src={getImageSrc("pocket", selections.pocket)}
+//                 alt="Pocket"
+//                 style={{ width: "300px", height: "auto" }}
+//               />
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default SuitCustomizer;
