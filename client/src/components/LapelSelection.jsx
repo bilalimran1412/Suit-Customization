@@ -1507,27 +1507,31 @@ const JacketOptions = ({
 							</h5>
 							<div className={`accordion-content ${openSection === "front" ? "open" : ""}`}>
 								{FrontendOptionsMap.map((section, index) => (
-									<div key={index} className={`section ${section.disabled ? "opacity-50" : ""}`}>
-										<h5 className="title">{section.title}</h5>
-										<div className={`${section.className} ${section.disabled ? "pointer-events-none" : ""}`}>
-											{section.options.map((option, idx) => (
-												<div
-													key={idx}
-													className={`option 
+									<>
+										<div key={index} className={`section ${section.disabled ? "opacity-50" : ""}`}>
+											<h5 className="title">{section.title}</h5>
+											<div className={`${section.className} ${section.disabled ? "pointer-events-none" : ""}`}>
+												{section.options.map((option, idx) => (
+													<div
+														key={idx}
+														className={`option 
             ${section.selectedOption === option.label ? "active" : ""}
             ${section.disabled ? "cursor-not-allowed" : "cursor-pointer"}
           `}
-													onClick={() => option.onClick()}>
-													{option.imgSrc ? (
-														<img alt={option.label} className="b-lazy b-loaded" src={option.imgSrc} />
-													) : (
-														<span className={`icon man_jacket ${option.iconClass} medium`} />
-													)}
-													<span className="text">{option.label}</span>
-													{option.price && <span className="price">{option.price}</span>}
-												</div>
-											))}
+														onClick={() => option.onClick()}>
+														{option.imgSrc ? (
+															<img alt={option.label} className="b-lazy b-loaded" src={option.imgSrc} />
+														) : (
+															<span className={`icon man_jacket ${option.iconClass} medium`} />
+														)}
+														<span className="text">{option.label}</span>
+														{option.price && <span className="price">{option.price}</span>}
+													</div>
+												))}
+											</div>
+										</div>
 
+										{section.title === "Embroidery Thread" && (
 											<DialogThread
 												open={isThreadDialogOpen}
 												setOpen={setIsThreadDialogOpen}
@@ -1535,8 +1539,8 @@ const JacketOptions = ({
 													setEmbroideryThreadColor(color);
 												}}
 											/>
-										</div>
-									</div>
+										)}
+									</>
 								))}
 							</div>
 						</div>
@@ -1716,29 +1720,42 @@ export default JacketOptions;
 
 const DialogThread = ({ open, setOpen, onSelectThread }) => {
 	const threadColors = [
-		{ color: "Red", code: "#FF0000" },
-		{ color: "Blue", code: "#0000FF" },
-		{ color: "Black", code: "#000000" },
-		{ color: "White", code: "#FFFFFF" },
+		{ color: "BR01", image: "/images/BR01.png" },
+		{ color: "BR02", image: "/images/BR02.png" },
+		{ color: "BR03", image: "/images/BR03.png" },
+		{ color: "BR04", image: "/images/BR04.png" },
+		{ color: "DBL01", image: "/images/DBL01.png" },
+		{ color: "DGRO1", image: "/images/DGRO1.png" },
+		{ color: "DGR02", image: "/images/DGR02.png" },
+		{ color: "GOLD01", image: "/images/GOLD01.png" },
 	];
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogContent>
+			<DialogContent className="text-white bg-black/50  p-6 rounded-lg shadow-2xl border border-gray-800">
 				<DialogHeader>
-					<DialogTitle>Select Thread Color</DialogTitle>
+					<DialogTitle className="text-xl font-semibold tracking-wide text-center mb-4">
+						Select Thread Color
+					</DialogTitle>
 				</DialogHeader>
-				<div className="grid grid-cols-2 gap-4 py-4">
+				<div
+					className="grid grid-cols-2 sm:grid-cols-3 gap-6 py-4 overflow-y-auto"
+					style={{ maxHeight: "400px", scrollbarWidth: "none" }} // Hide scrollbar in Firefox
+				>
 					{threadColors.map((thread) => (
 						<button
 							key={thread.color}
-							className="flex items-center gap-2 p-2 border rounded hover:bg-gray-100"
+							className="flex flex-col items-center gap-2 p-3 bg-gray-800 rounded-lg shadow-md border border-gray-700 hover:bg-gray-700 hover:scale-105 transition-all duration-300"
 							onClick={() => {
 								onSelectThread(thread.color);
 								setOpen(false);
 							}}>
-							<div className="w-6 h-6 rounded-full" style={{ backgroundColor: thread.code }} />
-							<span>{thread.color}</span>
+							<span className="text-sm capitalize text-gray-300">{thread.color}</span>
+							<img
+								src={thread.image}
+								alt={thread.color}
+								className="w-16 h-16 object-cover bg-center rounded-lg border border-gray-600"
+							/>
 						</button>
 					))}
 				</div>

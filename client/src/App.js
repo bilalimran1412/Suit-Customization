@@ -11,6 +11,7 @@ import Welcome from "./pages/Welcome";
 import AuthProviders from "./providers/AuthProvider";
 import Layout from "./providers/layout";
 import { ToastContainer } from "react-toastify";
+import Suites from "./pages/Suites";
 import "react-toastify/dist/ReactToastify.css";
 
 const notAuthRoutes = [
@@ -53,6 +54,13 @@ const authRoutes = [
 	},
 ];
 
+const publicRoutes = [
+	{
+		path: "/suites",
+		element: <Suites />,
+	},
+];
+
 const routes = [
 	{
 		path: "/",
@@ -63,6 +71,9 @@ const routes = [
 			{
 				element: <AuthProviders />,
 				children: authRoutes,
+			},
+			{
+				children: publicRoutes,
 			},
 		],
 	},

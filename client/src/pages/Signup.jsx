@@ -188,7 +188,7 @@ const SignUp = () => {
 
 							<form onSubmit={handleSubmit}>
 								<div className="mb-4">
-									<label className="mb-2.5 block font-medium text-black dark:text-white">First Name</label>
+									<label className="mb-2.5 block font-medium">First Name</label>
 									<div className="relative">
 										<input
 											type="text"
@@ -196,7 +196,7 @@ const SignUp = () => {
 											name="name"
 											value={formData.name}
 											onChange={handleChange}
-											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none"
 										/>
 										<span className="absolute right-4 top-4">
 											<ManICon />
@@ -212,7 +212,7 @@ const SignUp = () => {
 											name="lastName"
 											value={formData.lastName}
 											onChange={handleChange}
-											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none"
 										/>
 										<span className="absolute right-4 top-4">
 											<ManICon />
@@ -247,7 +247,7 @@ const SignUp = () => {
 											value={formData.password}
 											onChange={handleChange}
 											placeholder="Enter your password"
-											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none"
 										/>
 
 										<span className="absolute right-4 top-4">

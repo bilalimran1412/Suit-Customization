@@ -11,7 +11,7 @@ const Dashboard = () => {
 		const fetchSuites = async () => {
 			try {
 				setLoading(true);
-				const response = await fetch("http://localhost:3000/api/getSuitesByUser", {
+				const response = await fetch("http://localhost:4000/suites", {
 					method: "GET",
 					credentials: "include",
 					headers: {

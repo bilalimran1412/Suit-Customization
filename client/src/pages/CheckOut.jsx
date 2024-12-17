@@ -5,7 +5,7 @@ import { useSelectedData } from "../context/SelectedData";
 import { useCart } from "../context/cartContext";
 import ShowDetails from "../components/ShowDetails";
 import { useUserSession } from "../Hooks/useUserSession";
-import CheckoutForm from "../components/CheckoutForm";
+import { loadStripe } from "@stripe/stripe-js";
 
 const CheckOut = () => {
 	const { setSelectedData } = useSelectedData();
@@ -27,6 +27,30 @@ const CheckOut = () => {
 			phone: "",
 		},
 	});
+
+	const handleStripePayment = async () => {
+		const stripe = await loadStripe(
+			"pk_test_51PjcnfKf9wCY0IEjHeDfSaCQVnmuKvyvNDtHsOb0kIaFc9lMNhVLUDqmRF9JQPNYWxuF0EZUfSANZdDjmTYz8VeU00BiJPBDz2",
+		);
+
+		const response = await fetch("http://localhost:4000/checkout/6761ac46a97484af8856545d", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				quantity: 2,
+			}),
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		console.log("Data:", data);
+	};
 
 	const onSubmit = async (formData) => {
 		try {
@@ -68,7 +92,7 @@ const CheckOut = () => {
 		<div className="max-w-7xl mx-auto mt-10 p-6 bg-gray-50 rounded-lg shadow-lg">
 			<h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Checkout</h1>
 			<div className="grid md:grid-cols-2 gap-8">
-				<div className="bg-white p-6 rounded-lg shadow">
+				<div className="bg-white p-6 rounded-lg shadow space-y-4">
 					<h2 className="text-2xl font-semibold mb-6 text-gray-700">Customer Details</h2>
 					<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 						<div>
@@ -153,8 +177,12 @@ const CheckOut = () => {
 							Place Order
 						</button>
 					</form>
+					<button
+						onClick={handleStripePayment}
+						className="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+						Pay with Stripe
+					</button>
 				</div>
-				<CheckoutForm />
 				<ShowDetails
 					selectedData={items}
 					totalAmount={totalAmount}

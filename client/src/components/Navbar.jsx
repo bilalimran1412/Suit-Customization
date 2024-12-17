@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authClient } from "../lib/auth-client";
 import { useUserSession } from "../Hooks/useUserSession";
 import { ShoppingCart } from "lucide-react";
@@ -36,26 +36,27 @@ const Navbar = () => {
 
 					{/* Navigation Links */}
 					<div className="hidden md:flex items-center space-x-4">
-						<button
+						<Link
 							onClick={() => navigate("/")}
 							className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
 							Home
-						</button>
+						</Link>
+						<Link to={"/suites"} className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+							Suites
+						</Link>
 						{user && (
 							<>
-								<button
-									onClick={() => navigate("/Dashboard")}
+								<Link
+									to={"/dashboard"}
 									className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
 									Dashboard
-								</button>
-								<button
-									onClick={() => navigate("/cart")}
-									className="relative text-gray-700 hover:text-gray-900 px-3 py-2">
+								</Link>
+								<Link to={"/cart"} className="relative text-gray-700 hover:text-gray-900 px-3 py-2">
 									<ShoppingCart className="h-5 w-5" />
 									<span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
 										0
 									</span>
-								</button>
+								</Link>
 							</>
 						)}
 					</div>
