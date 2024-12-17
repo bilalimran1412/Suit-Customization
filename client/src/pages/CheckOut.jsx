@@ -5,6 +5,7 @@ import { useSelectedData } from "../context/SelectedData";
 import { useCart } from "../context/cartContext";
 import ShowDetails from "../components/ShowDetails";
 import { useUserSession } from "../Hooks/useUserSession";
+import CheckoutForm from "../components/CheckoutForm";
 
 const CheckOut = () => {
 	const { setSelectedData } = useSelectedData();
@@ -29,7 +30,7 @@ const CheckOut = () => {
 
 	const onSubmit = async (formData) => {
 		try {
-			const response = await fetch("http://localhost:3000/api/createSuite", {
+			const response = await fetch(" http://localhost:4000/suites", {
 				method: "POST",
 				credentials: "include",
 				headers: {
@@ -80,7 +81,6 @@ const CheckOut = () => {
 								{...register("name", {
 									required: "Name is required",
 								})}
-								disabled={true}
 								placeholder="Enter your name"
 								className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
 							/>
@@ -154,6 +154,7 @@ const CheckOut = () => {
 						</button>
 					</form>
 				</div>
+				<CheckoutForm />
 				<ShowDetails
 					selectedData={items}
 					totalAmount={totalAmount}

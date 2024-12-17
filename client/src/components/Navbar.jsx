@@ -9,15 +9,17 @@ const Navbar = () => {
 
 	const handleSignOut = async () => {
 		try {
-			await authClient.signOut({
-				fetchOptions: {
-					onSuccess: () => {
-						localStorage.removeItem("user_session");
-						navigate("/signup");
-					},
-					onError: () => console.log("Signout failed"),
+			const response = await fetch("http://localhost:4000/auth/logout", {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
 				},
 			});
+
+			if (response.ok) {
+				navigate("/login");
+			}
 		} catch (error) {
 			console.error("Signout error:", error);
 		}

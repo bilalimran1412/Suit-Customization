@@ -1,24 +1,27 @@
 // App.js
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AuthProviders from "./providers/AuthProvider";
 import "./index.css";
-import { SuiteCustomization } from "./pages/SuiteCustomization";
-import CheckOut from "./pages/CheckOut";
-import Welcome from "./pages/Welcome";
 import Cart from "./pages/Cart";
-import LoginPage from "./pages/Login";
-import Layout from "./providers/layout";
-import SignupPage from "./pages/Signup";
+import CheckOut from "./pages/CheckOut";
 import Dashboard from "./pages/Dashboard";
+import SignIn from "./pages/Signin";
+import Signup from "./pages/Signup";
+import { SuiteCustomization } from "./pages/SuiteCustomization";
+import Welcome from "./pages/Welcome";
+import AuthProviders from "./providers/AuthProvider";
+import Layout from "./providers/layout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const notAuthRoutes = [
 	{
-		path: "/login",
-		element: <LoginPage />,
+		path: "/Signin",
+		element: <SignIn />,
 	},
+
 	{
 		path: "/signup",
-		element: <SignupPage />,
+		element: <Signup />,
 	},
 ];
 
@@ -71,6 +74,18 @@ const App = () => {
 	return (
 		<>
 			<RouterProvider router={router} />
+			<ToastContainer
+				position="top-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+			/>
 		</>
 	);
 };

@@ -8,6 +8,8 @@ const AuthProviders = ({}) => {
 		return <div className="h-screen w-screen flex items-center justify-center">Loading...</div>;
 	}
 
+	console.log(user);
+
 	if (error) {
 		console.log("error", error);
 		return <Navigate to="/signup" replace />;
