@@ -1495,53 +1495,97 @@ const JacketOptions = ({
 		selectedStitchingLabelColor,
 	]);
 
+	const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+
+	const handleNext = () => {
+		const nextIndex = currentSectionIndex + 1;
+
+		// Check if the next section is "Embroidery – position" and should be skipped
+		if (FrontendOptionsMap[nextIndex]?.title === "Embroidery – position" && embroideryThread === "Without Embroidery") {
+			setCurrentSectionIndex((prev) => prev + 2); // Skip the next section
+		} else if (currentSectionIndex < FrontendOptionsMap.length - 1) {
+			setCurrentSectionIndex((prev) => prev + 1); // Move to the next section
+		}
+	};
+
+	const handlePrevious = () => {
+		const prevIndex = currentSectionIndex - 1;
+
+		// Check if the previous section is "Embroidery – position" and should be skipped
+		if (FrontendOptionsMap[prevIndex]?.title === "Embroidery – position" && embroideryThread === "Without Embroidery") {
+			setCurrentSectionIndex((prev) => prev - 2); // Skip the previous section
+		} else if (currentSectionIndex > 0) {
+			setCurrentSectionIndex((prev) => prev - 1); // Move to the previous section
+		}
+	};
+
 	return (
 		<div className={`jacket-options ${className} option_trigger`}>
 			{ChangedVersion ? (
 				<>
-					<div className="accordion-container">
-						{/* Front Section */}
-						<div className="accordion-item">
-							<h5 className="accordion-title" onClick={() => handleAccordionTitleClick("front")}>
-								Front
-							</h5>
-							<div className={`accordion-content ${openSection === "front" ? "open" : ""}`}>
-								{FrontendOptionsMap.map((section, index) => (
-									<>
-										<div key={index} className={`section ${section.disabled ? "opacity-50" : ""}`}>
-											<h5 className="title">{section.title}</h5>
-											<div className={`${section.className} ${section.disabled ? "pointer-events-none" : ""}`}>
-												{section.options.map((option, idx) => (
-													<div
-														key={idx}
-														className={`option 
-            ${section.selectedOption === option.label ? "active" : ""}
-            ${section.disabled ? "cursor-not-allowed" : "cursor-pointer"}
-          `}
-														onClick={() => option.onClick()}>
-														{option.imgSrc ? (
-															<img alt={option.label} className="b-lazy b-loaded" src={option.imgSrc} />
-														) : (
-															<span className={`icon man_jacket ${option.iconClass} medium`} />
-														)}
-														<span className="text">{option.label}</span>
-														{option.price && <span className="price">{option.price}</span>}
-													</div>
-												))}
-											</div>
-										</div>
+					<div className="accordion-container ">
+						<div className="">
+							<div className="flex justify-center gap-4">
+								<button
+									onClick={handlePrevious}
+									disabled={currentSectionIndex === 0}
+									className={`btn btn-prev px-4 py-2 text-white rounded-md ${
+										currentSectionIndex === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+									}`}>
+									Previous
+								</button>
+								<button
+									onClick={handleNext}
+									disabled={currentSectionIndex === FrontendOptionsMap.length - 1}
+									className={`btn btn-next px-4 py-2 text-white rounded-md ${
+										currentSectionIndex === FrontendOptionsMap.length - 1
+											? "bg-gray-400 cursor-not-allowed"
+											: "bg-blue-500 hover:bg-blue-600"
+									}`}>
+									Next
+								</button>
+							</div>
 
-										{section.title === "Embroidery Thread" && (
-											<DialogThread
-												open={isThreadDialogOpen}
-												setOpen={setIsThreadDialogOpen}
-												onSelectThread={(color) => {
-													setEmbroideryThreadColor(color);
-												}}
-											/>
-										)}
-									</>
-								))}
+							{/* Accordion Content */}
+							<div className={`accordion-content` + (openSection === "front" ? " open" : "")}>
+								{FrontendOptionsMap.map(
+									(section, index) =>
+										index === currentSectionIndex && (
+											<div key={index} className={`section ${section.disabled ? "opacity-50" : ""}`}>
+												<h5 className="title">{section.title}</h5>
+												<div className={`${section.className} ${section.disabled ? "pointer-events-none" : ""}`}>
+													{section.options.map((option, idx) => (
+														<div
+															key={idx}
+															className={`option 
+                      ${section.selectedOption === option.label ? "active" : ""}
+                      ${section.disabled ? "cursor-not-allowed" : "cursor-pointer"}
+                    `}
+															onClick={() => option.onClick()}>
+															{option.imgSrc ? (
+																<img alt={option.label} className="b-lazy b-loaded" src={option.imgSrc} />
+															) : (
+																<span className={`icon man_jacket ${option.iconClass} medium`} />
+															)}
+															<span className="text">{option.label}</span>
+															{option.price && <span className="price">{option.price}</span>}
+														</div>
+													))}
+												</div>
+
+												{/* Embroidery Thread Dialog */}
+												{section.title === "Embroidery Thread" && (
+													<DialogThread
+														open={isThreadDialogOpen}
+														setOpen={setIsThreadDialogOpen}
+														onSelectThread={(color) => {
+															setEmbroideryThreadColor(color);
+														}}
+													/>
+												)}
+											</div>
+										),
+								)}
 							</div>
 						</div>
 
