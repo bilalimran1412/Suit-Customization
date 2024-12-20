@@ -60,26 +60,7 @@ const imageLayers = {
 		"images/back_pocket+with_button.png",
 		"images/back_pocket+with_button (1).png",
 	],
-	"Melange-Single-breasted 1 button-Same Fabric": [
-		// Jacket layers
-		"images/interior+espalda_abajo+length_long.png",
-		"images/interior+espalda_arriba.png",
-		"images/negra.png",
-		"images/interior+espalda_arriba (1).png",
-		"images/interior+espalda_abajo+length_long (1).png",
-		"https://d2w9m16hs9jc37.cloudfront.net/3d/new_man/jacket/STD/141_fabric/front/neck_single_breasted+buttons_1+lapel_medium+style_lapel_notch.png",
-		"images/interior+sleeves.png",
-		"images/bottom_single_breasted+length_long+hemline_open.png",
-		"images/hip_pockets_with_flap+fit_slim.png",
-		"images/breast_pocket_classic.png",
-		"images/neck_single_breasted+buttons_1+lapel_medium+style_lapel_notch (2).png",
 
-		// Pants layers
-		"images/length_long+cut_slim.png",
-		"images/front_pocket+diagonal.png",
-		"images/back_pocket+with_button.png",
-		"images/back_pocket+with_button (1).png",
-	],
 	// Notch
 	"Melange-Single-breasted 1 button-Notch-Same Fabric": [
 		// Jacket layers

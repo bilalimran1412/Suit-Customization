@@ -1521,74 +1521,68 @@ const JacketOptions = ({
 
 	return (
 		<div className={`jacket-options ${className} option_trigger`}>
-			{ChangedVersion ? (
-				<>
-					<div className="accordion-container ">
-						<div className="">
-							<div className="flex justify-center gap-4">
-								<button
-									onClick={handlePrevious}
-									disabled={currentSectionIndex === 0}
-									className={`btn btn-prev px-4 py-2 text-white rounded-md ${
-										currentSectionIndex === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-									}`}>
-									Previous
-								</button>
-								<button
-									onClick={handleNext}
-									disabled={currentSectionIndex === FrontendOptionsMap.length - 1}
-									className={`btn btn-next px-4 py-2 text-white rounded-md ${
-										currentSectionIndex === FrontendOptionsMap.length - 1
-											? "bg-gray-400 cursor-not-allowed"
-											: "bg-blue-500 hover:bg-blue-600"
-									}`}>
-									Next
-								</button>
-							</div>
-
-							{/* Accordion Content */}
-							<div className={`accordion-content` + (openSection === "front" ? " open" : "")}>
-								{FrontendOptionsMap.map(
-									(section, index) =>
-										index === currentSectionIndex && (
-											<div key={index} className={`section ${section.disabled ? "opacity-50" : ""}`}>
-												<h5 className="title">{section.title}</h5>
-												<div className={`${section.className} ${section.disabled ? "pointer-events-none" : ""}`}>
-													{section.options.map((option, idx) => (
-														<div
-															key={idx}
-															className={`option 
+			<div>
+				<div className="flex justify-center gap-4">
+					<button
+						onClick={handlePrevious}
+						disabled={currentSectionIndex === 0}
+						className={`btn btn-prev px-4 py-2 text-white rounded-md ${
+							currentSectionIndex === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+						}`}>
+						Previous
+					</button>
+					<button
+						onClick={handleNext}
+						disabled={currentSectionIndex === FrontendOptionsMap.length - 1}
+						className={`btn btn-next px-4 py-2 text-white rounded-md ${
+							currentSectionIndex === FrontendOptionsMap.length - 1
+								? "bg-gray-400 cursor-not-allowed"
+								: "bg-blue-500 hover:bg-blue-600"
+						}`}>
+						Next
+					</button>
+				</div>
+				{FrontendOptionsMap.map(
+					(section, index) =>
+						index === currentSectionIndex && (
+							<div key={index} className={`section ${section.disabled ? "opacity-50" : ""}`}>
+								<h5 className="title">{section.title}</h5>
+								<div className={`${section.className} ${section.disabled ? "pointer-events-none" : ""}`}>
+									{section.options.map((option, idx) => (
+										<div
+											key={idx}
+											className={`option 
                       ${section.selectedOption === option.label ? "active" : ""}
                       ${section.disabled ? "cursor-not-allowed" : "cursor-pointer"}
                     `}
-															onClick={() => option.onClick()}>
-															{option.imgSrc ? (
-																<img alt={option.label} className="b-lazy b-loaded" src={option.imgSrc} />
-															) : (
-																<span className={`icon man_jacket ${option.iconClass} medium`} />
-															)}
-															<span className="text">{option.label}</span>
-															{option.price && <span className="price">{option.price}</span>}
-														</div>
-													))}
-												</div>
+											onClick={() => option.onClick()}>
+											{option.imgSrc ? (
+												<img alt={option.label} className="b-lazy b-loaded" src={option.imgSrc} />
+											) : (
+												<span className={`icon man_jacket ${option.iconClass} medium`} />
+											)}
+											<span className="text">{option.label}</span>
+											{option.price && <span className="price">{option.price}</span>}
+										</div>
+									))}
+								</div>
 
-												{/* Embroidery Thread Dialog */}
-												{section.title === "Embroidery Thread" && (
-													<DialogThread
-														open={isThreadDialogOpen}
-														setOpen={setIsThreadDialogOpen}
-														onSelectThread={(color) => {
-															setEmbroideryThreadColor(color);
-														}}
-													/>
-												)}
-											</div>
-										),
+								{section.title === "Embroidery Thread" && (
+									<DialogThread
+										open={isThreadDialogOpen}
+										setOpen={setIsThreadDialogOpen}
+										onSelectThread={(color) => {
+											setEmbroideryThreadColor(color);
+										}}
+									/>
 								)}
 							</div>
-						</div>
-
+						),
+				)}
+			</div>
+			{ChangedVersion ? (
+				<>
+					<div>
 						{/* Backend Section */}
 						<div className="accordion-item">
 							<h5 className="accordion-title" onClick={() => handleAccordionTitleClick("backend")}>

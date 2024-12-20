@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/Preview.css";
 import imageLayers from "./imageLAyer";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cartContext";
 import { useSelectedData } from "../context/SelectedData";
+import { getImagesBySelection } from "../lib/imageParse";
 const Preview = ({
 	lapelbuttonwholecolor,
 	elbowPatches,
@@ -41,7 +42,6 @@ const Preview = ({
 		if (pockets) options.push(pockets);
 		if (sleevebuttons) options.push(sleevebuttons);
 		if (pleats) options.push(pleats);
-
 		if (insidePockets) options.push(insidePockets);
 		if (waist) options.push(waist);
 		if (vest) options.push(vest);
@@ -122,6 +122,9 @@ const Preview = ({
 		}
 	};
 
+	const images = getImagesBySelection(selectedData);
+	console.log(images, "These are the images to show ");
+
 	return (
 		<div className="suit-preview flex">
 			<div className="right_side_selecter">
@@ -149,28 +152,7 @@ const Preview = ({
 				</div>
 			</div>
 			<div className={`${className}  betwen_different`}>
-				<div className={`jacket-layers`}>
-					{selectedImages.slice(0, 11).map((src, index) => (
-						<img
-							key={index}
-							src={src}
-							alt={`Jacket Layer ${index}`}
-							className="suit-layer jacket"
-							style={{ zIndex: index + 1 }}
-						/>
-					))}
-				</div>
-				<div className="pants-layers">
-					{selectedImages.slice(11).map((src, index) => (
-						<img
-							key={index + 11}
-							src={src}
-							alt={`Pants Layer ${index}`}
-							className="suit-layer pants"
-							style={{ zIndex: index + 12 }}
-						/>
-					))}
-				</div>
+				<div className={`jacket-layers`}></div>
 			</div>
 			<div className="left_side_content">
 				<div className="other_description">
